@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const path = require('path');
+const cors = require('cors');
 const expressSession = require('express-session');
 const userRouter = require('./Users/users.route');
 mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser: true }, (error) => {
@@ -17,14 +18,20 @@ mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser
             saveUninitialized: true,
             cookie: { secure: false }
         }));
-        server.use( (req,res,next) => {
-            res.header("Access-Control-Allow-Origin", "http://localhost:3000");
-            res.header("Access-Control-Allow-Origin","*");
-            res.method("Access-Control-Allow-Method","*");
-            res.header("Access-Control-Allow-Credentials", "true");
-            res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
-            next();
-          } );
+        // server.use( (req,res,next) => {
+        //     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
+        //     //res.header("Access-Control-Allow-Origin","*");
+        //     res.header("Access-Control-Allow-Method","*");
+        //     res.header("Access-Control-Allow-Credentials", "true");
+        //     res.header("Access-Control-Allow-Headers","Origin,X-Requested-With,Content-Type,Accept");
+        //     next();
+        //   } );
+          server.use(cors({
+              origin : ["http://localhost:3000"],
+              credentials:true,
+              methods:["GET","PUT","POST"],
+              allowedHeaders:["Content-type",'Authorization'],
+          }));   
         server.use('/user', userRouter);
         server.listen(3001, (err) => {
             if (err) {

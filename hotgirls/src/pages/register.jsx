@@ -7,28 +7,29 @@ class register extends Component {
         cfpassword: '',
         fullname: '',
         fail_message: "",
+        loading: false,
     };
-    handleemail = (useremail) => {
+    handleemail = (event) => {
         this.setState({
-            email: useremail,
+            email: event.target.value,
             fail_message: "",
         });
     };
-    handleuserpassword = (userpassword) => {
+    handleuserpassword = (event) => {
         this.setState({
-            password: userpassword,
+            password: event.target.value,
             fail_message: "",
         });
     };
-    handlecfuserpassword = (cfuserpassword) => {
+    handlecfuserpassword = (event) => {
         this.setState({
-            cfpassword: cfuserpassword,
+            cfpassword: event.target.value,
             fail_message: "",
         });
     };
-    handlefullname = (userfullname) => {
+    handlefullname = (event) => {
         this.setState({
-            fullname: userfullname,
+            fullname: event.target.value,
             fail_message: "",
         });
     };
@@ -36,17 +37,20 @@ class register extends Component {
         event.preventDefault();
         if (!this.state.email || !this.state.fullname || !this.state.password || !this.state.cfpassword) {
             this.setState({
-              fail_message: "Please fill it all"
+                fail_message: "Please fill it all"
             });
             return;
-          }
-          if(this.state.password!==this.state.cfpassword){
+        }
+        if (this.state.password !== this.state.cfpassword) {
             this.setState({
                 fail_message: "Password and Confirm password didn't match."
-              });
-              return;
-          }
-          fetch(`http://localhost:3001/user/register`,{
+            });
+            return;
+        }
+        // this.setState({
+        //     loading:true,
+        // });
+        fetch(`http://localhost:3001/user/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -56,28 +60,28 @@ class register extends Component {
                 email: this.state.email,
                 password: this.state.password,
                 cfpassword: this.state.cfpassword,
-                fullname: this.state.fullname
+                fullname: this.state.fullname,
             }),
-          })
-          .then((res) => {
-              return res.json();
-            
-          })
-          .then((data) => {
-              if(data.success) {
-                  window.location.href=`/login`;
-              }
-              else {
-                  console.log(data);
-              }
+        })
+            .then((res) => {
+                return res.json();
 
-          })
-          .catch((error) => {
-            console.log(error);
-            window.alert(error.message);
-        });
+            })
+            .then((data) => {
+                if (data.success) {
+                    window.location.href = `/login`;
+                }
+                else {
+                    console.log(data.message);
+                }
+
+            })
+            .catch((error) => {
+                console.log(error);
+                window.alert(error.message);
+            });
     };
-    
+
     render() {
         return (
             <div>
@@ -90,7 +94,7 @@ class register extends Component {
                             aria-describedby="emailHelp"
                             placeholder="Enter email"
                             value={this.state.useremail}
-                            onChange={(event) => { this.handleemail(event.target.value) }}
+                            onChange={this.handleemail}
                         ></input>
                         <small id="emailHelp" className="form-text text-muted">We'll never share your email with anyone else.</small>
                     </div>
@@ -100,7 +104,7 @@ class register extends Component {
                             id="exampleInputPassword1"
                             placeholder="Password"
                             value={this.state.userpassword}
-                            onChange={(event) => { this.handleuserpassword(event.target.value) }}
+                            onChange={this.handleuserpassword}
                         />
                     </div>
                     <div className="form-group">
@@ -109,7 +113,7 @@ class register extends Component {
                             id="exampleInputPassword1"
                             placeholder="Confirm Password"
                             value={this.state.cfuserpassword}
-                            onChange={(event) => { this.handlecfuserpassword(event.target.value) }}
+                            onChange={this.handlecfuserpassword}
                         />
                     </div>
                     <div className="form-group">
@@ -118,7 +122,7 @@ class register extends Component {
                             id="exampleInputPassword1"
                             placeholder="Fullname"
                             value={this.state.userfullname}
-                            onChange={(event) => { this.handlefullname(event.target.value) }}
+                            onChange={this.handlefullname}
                         />
                     </div>
                     <div className="form-check">
@@ -129,6 +133,10 @@ class register extends Component {
                     <button type="submit" className="btn btn-primary"
                         onClick={this.handleSubmit}
                     >Register</button>
+                        {/* {(!this.state.loading) ? <div></div> :<div className="spinner-border text-success" role="status">
+                        <span className="sr-only">Loading...</span>
+                    </div>} */}
+                    
 
                 </form>
             </div>

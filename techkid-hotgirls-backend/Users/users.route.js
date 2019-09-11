@@ -32,7 +32,7 @@ userRouter.post('/register', async (req, res) => {
             let newUser = await UserModel.create({
                 email: req.body.email,
                 password: hashPassword,
-                fullName: req.body.fullName
+                fullName: req.body.fullname
             });
             res.status(201).json({
                 success: true,
@@ -72,7 +72,11 @@ userRouter.post('/login',async (req,res) => {
                 res.status(201).json({
                     success:true,
                     message:"login success",
+                    data:{
+                        email:data.email,
+                    }
                 });
+
             } else {
                 res.status(400).json({
                     success: false,

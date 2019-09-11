@@ -33,7 +33,8 @@ class login extends Component {
             })
             .then((data) => {
                 if (data.success) {
-                    window.location.href = `/currentuser`;
+                    window.localStorage.setItem('email',data.data.email);
+                    window.location.href = `/`;
                 }
                 else {
                     console.log(data);
