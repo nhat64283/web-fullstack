@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 
 class postscreen extends Component {
     render() {
-        return (
-            <div>
+
                    render() {
         return (
             <div className='row mt-5'>
@@ -55,8 +54,7 @@ class postscreen extends Component {
             </div>
         )
     }
-            </div>
-        );
+         
     }
 }
 

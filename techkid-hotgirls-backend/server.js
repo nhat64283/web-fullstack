@@ -5,6 +5,7 @@ const path = require('path');
 const cors = require('cors');
 const expressSession = require('express-session');
 const userRouter = require('./Users/users.route');
+const postRouter = require('./Post/post.route');
 mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser: true }, (error) => {
     if (error) {
         console.log(error);
@@ -33,6 +34,7 @@ mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser
               allowedHeaders:["Content-type",'Authorization'],
           }));   
         server.use('/user', userRouter);
+        server.use('/post',postRouter);
         server.listen(3001, (err) => {
             if (err) {
                 console.log(err);

@@ -25,9 +25,13 @@ const PostSchema = new mongoose.Schema({
   },
   author: {
     type: mongoose.Schema.Types.ObjectId,
+    //tang toc do truy xuat theo id
+    //
     ref: 'User',
+    // dua vao ref va objectid thi truy xuat sang bang khac 
     required: true,
   },
+  lastModifiedAt: Date,
 });
 const PostsModel = mongoose.model('Post', PostSchema);
 
