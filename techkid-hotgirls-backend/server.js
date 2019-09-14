@@ -6,6 +6,7 @@ const cors = require('cors');
 const expressSession = require('express-session');
 const userRouter = require('./Users/users.route');
 const postRouter = require('./Post/post.route');
+const uploadsRouter = require('./uploads/uploads.route');
 mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser: true }, (error) => {
     if (error) {
         console.log(error);
@@ -19,6 +20,7 @@ mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser
             saveUninitialized: true,
             cookie: { secure: false }
         }));
+        server.use(express.static('public'));
         // server.use( (req,res,next) => {
         //     res.header("Access-Control-Allow-Origin", "http://localhost:3000");
         //     //res.header("Access-Control-Allow-Origin","*");
@@ -35,6 +37,7 @@ mongoose.connect(`mongodb://localhost:27017/techkid-hotgirls`, { useNewUrlParser
           }));   
         server.use('/user', userRouter);
         server.use('/post',postRouter);
+        server.use('/upload',uploadsRouter);
         server.listen(3001, (err) => {
             if (err) {
                 console.log(err);

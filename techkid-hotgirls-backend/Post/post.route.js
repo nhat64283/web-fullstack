@@ -94,5 +94,7 @@ postRouter.get('/:postId', async (req,res) => {
             message: err.message
         });
     }
-})
+});
+
+
 module.exports = postRouter;
