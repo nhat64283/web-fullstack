@@ -68,6 +68,7 @@ userRouter.post('/login',async (req,res) => {
                 req.session.currentUser = {
                     email:data.email,
                     _id: data._id,
+                    
                 };
                 res.status(201).json({
                     success:true,
@@ -102,6 +103,7 @@ userRouter.get('/test',(req,res) => {
     console.log(req.session.currentUser);
     res.json({
         success:true,
+        data:req.session.currentUser,
     });
 });
 module.exports = userRouter;
