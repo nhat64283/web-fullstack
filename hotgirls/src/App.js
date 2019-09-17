@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import register from './pages/register';
 import login from './pages/login';
 import HomeScreen from './pages/HomeScreen';
-
+import CreatePostScreen from './pages/CreatePostScreen';
 class App extends React.Component {
   state = {
     currentUser: '',
@@ -82,6 +82,7 @@ class App extends React.Component {
                 <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </form>
+              {this.state.currentUser ? (<a href='/create-post' className = 'btn'>New post</a>):null}
             </div>
           </nav>
         </div>
@@ -90,6 +91,7 @@ class App extends React.Component {
             <Route path='/' component={HomeScreen} exact={true} />
             <Route path='/login' component={login} />
             <Route path='/register' component={register} />
+            <Route path= '/create-post' component={CreatePostScreen}/>
 
             {/* <Route path='/games/:gameId/' component={GameDetailScreen} />
         <Route component={NotFoundScreen} /> */}

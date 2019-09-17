@@ -95,6 +95,33 @@ postRouter.get('/:postId', async (req,res) => {
         });
     }
 });
-
+postRouter.get(`/get-posts`,async (req,res) => {
+    //pagination
+    //infinite scroll
+    //offset paging =>  PAGE number || pageSize => linit skip cua db
+    const pageNumber = Number[req.query.pageNumber];
+    const pageSize = Number[req.query.pageSize];
+    const validateSchema = joi.object().keys({
+        pageNumber: joi.number().min(1),
+        pageSize:joi.number().min(10).max(50),
+    })
+    const validateResult = joi.validate(req.query, validateSchema);
+    if(validateResult.error)
+    {
+        const error = validateResult.error.details[0];
+        res.status(400).json({
+            success: false,
+            message: error.message,
+        });
+    } else {
+       
+        const result = await postsModel.find({})
+        .populate('author','_id fullName email')
+        .sort({createdAt: -1, fullName: 1})
+        .skip((pageNumber-1)*pageSize)
+        .limit(pageSize)
+        .lean();
+    }
+});
 
 module.exports = postRouter;
