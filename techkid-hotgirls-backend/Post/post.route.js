@@ -95,7 +95,7 @@ postRouter.get('/:postId', async (req,res) => {
         });
     }
 });
-postRouter.get(`/get-posts`,async (req,res) => {
+postRouter.get(`/get/posts`,async (req,res) => {
     //pagination
     //infinite scroll
     //offset paging =>  PAGE number || pageSize => linit skip cua db
@@ -103,7 +103,7 @@ postRouter.get(`/get-posts`,async (req,res) => {
     const pageSize = Number[req.query.pageSize];
     const validateSchema = joi.object().keys({
         pageNumber: joi.number().min(1),
-        pageSize:joi.number().min(10).max(50),
+        pageSize:joi.number().min(5).max(50),
     })
     const validateResult = joi.validate(req.query, validateSchema);
     if(validateResult.error)
@@ -118,9 +118,18 @@ postRouter.get(`/get-posts`,async (req,res) => {
         const result = await postsModel.find({})
         .populate('author','_id fullName email')
         .sort({createdAt: -1, fullName: 1})
+
         .skip((pageNumber-1)*pageSize)
         .limit(pageSize)
         .lean();
+        const total = await postsModel.find({}).countDocuments();
+        res.status(200).json({
+            success:true,
+            data:{
+                data:result,
+                total:total,
+            }
+        });
     }
 });
 

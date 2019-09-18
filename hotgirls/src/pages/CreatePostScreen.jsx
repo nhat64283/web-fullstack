@@ -89,7 +89,7 @@ class CreatePostScreen extends Component {
                         content:this.state.content,
                         imageUrl:uploadResult.data,
                     }),
-                }) .then((res) => {
+                }).then((res) => {
                     return res.json();
                  })
                 //  window.location.href = `/`;
