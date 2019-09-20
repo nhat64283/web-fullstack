@@ -99,8 +99,8 @@ postRouter.get(`/get/posts`,async (req,res) => {
     //pagination
     //infinite scroll
     //offset paging =>  PAGE number || pageSize => linit skip cua db
-    const pageNumber = Number[req.query.pageNumber];
-    const pageSize = Number[req.query.pageSize];
+    const pageNumber = Number(req.query.pageNumber);
+    const pageSize = Number(req.query.pageSize);
     const validateSchema = joi.object().keys({
         pageNumber: joi.number().min(1),
         pageSize:joi.number().min(1).max(50),
