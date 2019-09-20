@@ -103,9 +103,13 @@ postRouter.get(`/get/posts`,async (req,res) => {
     const pageSize = Number[req.query.pageSize];
     const validateSchema = joi.object().keys({
         pageNumber: joi.number().min(1),
-        pageSize:joi.number().min(5).max(50),
+        pageSize:joi.number().min(1).max(50),
     })
-    const validateResult = joi.validate(req.query, validateSchema);
+    //const validateResult = joi.validate(req.query, validateSchema);
+    const validateResult = joi.validate({
+        pageNumber: pageNumber,
+        pageSize: pageSize,
+      }, validateSchema);
     if(validateResult.error)
     {
         const error = validateResult.error.details[0];

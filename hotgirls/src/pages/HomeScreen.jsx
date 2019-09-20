@@ -1,14 +1,14 @@
 
 import React from 'react';
 
-const pageSize = 5;
+const pageSize = 6;
 
 class HomeScreen extends React.Component {
     state = {
         data: [],
         total: 0,
         currentPageNumber: 1,
-        detailModelVisible: false,
+        detailModalVisible: false,
         selectedPost: undefined,
     };
 
@@ -32,9 +32,10 @@ class HomeScreen extends React.Component {
             });
 
             this.setState({
+                data: result.data.data,
                 total: result.data.total,
-                data: result.data.data
             });
+            window.scrollTo({ top: 0 });
         } catch (error) {
             window.alert(error.message);
             console.log(error.message);
@@ -77,15 +78,16 @@ class HomeScreen extends React.Component {
     };
     handlePostClick = (selectedPost) => {
         this.setState({
-            detailModelVisible: true,
-            selectedPost: undefined,
+            detailModalVisible: true,
+            selectedPost: selectedPost,
         });
     }
-    closeDetailModel = () => {
+    closeDetailModal = () => {
         this.setState({
-            detailModelVisible: false,
+            detailModalVisible: false,
+            selectedPost:undefined,
         })
-    }
+    };
     render() {
         const maxPageNumber = Math.ceil(this.state.total / pageSize);
         const paginations = [];
@@ -170,30 +172,57 @@ class HomeScreen extends React.Component {
                         </li>
                     </ul>
                 </nav>
+                {this.state.detailModalVisible ? (
 
-                <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Launch demo modal
-</button>
-                {this.state.detailModelVisible ? (
-                    <div class="modal fade" id="exampleModal" onClick={this.closeDetailModel}>
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content" onClick={() => { }}>
-                                <div className="modal-header">
-                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
+
+                    <div className="modal fade show"
+                        id="exampleModalScrollable"
+                        role="dialog"
+                        tabIndex="-1"
+                        style={{
+                            display: "block",
+                            backgroundColor: "rgba(0,0,0,0.5)",
+                        }}
+                        onClick = {this.closeDetailModal}
+                    >
+                        <div className="modal-dialog modal-dialog-scrollable" role="document">
+                            <div className="modal-content"
+                            onClick={(event) => {
+                                event.stopPropagation();
+                            }}
+                            >
+
                                 <div className="modal-body">
-                                    ...
-</div>
+                                    <div
+                                     className="card-img-top"
+                                     style={{
+                                         backgroundImage: `url(http://localhost:3001${this.state.selectedPost.imageUrl})`,
+                                         backgroundSize: 'cover',
+                                         backgroundPosition: 'center',
+                                         backgroundRepeat: 'no-repeate',
+                                         height: '350px',
+                                         width: 'auto'
+                                     }}
+                                    ></div>
+                                     <h5 className="card-title">{this.state.selectedPost.author.fullName}</h5>
+                                        <p
+                                            className="card-text">
+                                            
+                                            {this.state.selectedPost.content}
+                                        </p>
+
+      </div>
                                 <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeDetailModel}>Close</button>
-                                    <button type="button" className="btn btn-primary">Save changes</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal"
+                                    onClick = {this.closeDetailModal}
+                                    >Close</button>
+
                                 </div>
                             </div>
                         </div>
-                    </div>) : null}
+                    </div>
+) : null}
+
 
             </div>
         );
