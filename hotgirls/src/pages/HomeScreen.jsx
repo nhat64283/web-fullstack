@@ -9,7 +9,7 @@ class HomeScreen extends React.Component {
         total: 0,
         currentPageNumber: 1,
         detailModelVisible: false,
-        selectedPost:undefined,
+        selectedPost: undefined,
     };
 
     componentWillMount() {
@@ -77,13 +77,13 @@ class HomeScreen extends React.Component {
     };
     handlePostClick = (selectedPost) => {
         this.setState({
-            detailModelVisible:true,
-            selectedPost:undefined,
+            detailModelVisible: true,
+            selectedPost: undefined,
         });
     }
     closeDetailModel = () => {
         this.setState({
-            detailModelVisible:false,
+            detailModelVisible: false,
         })
     }
     render() {
@@ -174,26 +174,26 @@ class HomeScreen extends React.Component {
                 <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                     Launch demo modal
 </button>
-{this.state.detailModelVisible ? (
-    <div class="modal fade" id="exampleModal" onClick={this.closeDetailModel}>
-        <div className="modal-dialog" role="document">
-            <div className="modal-content" onClick={() => {}}>
-                <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div className="modal-body">
-                    ...
+                {this.state.detailModelVisible ? (
+                    <div class="modal fade" id="exampleModal" onClick={this.closeDetailModel}>
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content" onClick={() => { }}>
+                                <div className="modal-header">
+                                    <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    ...
 </div>
-                <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick = {this.closeDetailModel}>Close</button>
-                    <button type="button" className="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>):null}
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={this.closeDetailModel}>Close</button>
+                                    <button type="button" className="btn btn-primary">Save changes</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>) : null}
 
             </div>
         );
