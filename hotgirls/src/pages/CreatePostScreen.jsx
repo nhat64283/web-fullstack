@@ -58,6 +58,9 @@ class CreatePostScreen extends Component {
     }
     handleFormSubmit = async (event) => {
         event.preventDefault();
+        this.setState({
+            successmessage: '',
+         });
         if(!this.state.content)
         {
             this.setState({
@@ -182,7 +185,7 @@ class CreatePostScreen extends Component {
                         
                     </div>
                     <div>
-                    <button type="button" class="btn btn-success"
+                    <button type="button" className="btn btn-success"
                     onClick={this.handleReturnHomePage}
                     >Return to home page</button>
                     </div>

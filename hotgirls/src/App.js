@@ -35,9 +35,9 @@ class App extends React.Component {
         console.log(error);
         window.alert(error.message);
       });
-      this.setState({
-        currentUser:'',
-      })
+    this.setState({
+      currentUser: '',
+    })
   };
   render() {
     return (
@@ -51,16 +51,20 @@ class App extends React.Component {
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
               {this.state.currentUser ? (
-                <span> welcome {this.state.currentUser},<a className="'nav-link"
-                onClick = {this.handleLogout}
-                >Log out</a></span>
+                <span> welcome {this.state.currentUser},<button className="nav-link btn btn-info"
+                  onClick={this.handleLogout}
+                >Log out</button></span>
               )
                 : (<ul className="navbar-nav mr-auto">
                   <li className="nav-item active">
                     <a className="nav-link" href="#">Home <span className="sr-only">(current)</span></a>
                   </li>
+
                   <li className="nav-item">
-                    <a className="nav-link" href="#">Link</a>
+                    <a className="nav-link" href="/login">Login</a>
+                  </li>
+                  <li className="nav-item">
+                    <a className="nav-link" href="/register">Register</a>
                   </li>
                   {/* <li className="nav-item dropdown">
     <a className="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -82,7 +86,7 @@ class App extends React.Component {
                 <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" />
                 <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
               </form>
-              {this.state.currentUser ? (<a href='/create-post' className = 'btn'>New post</a>):null}
+              {this.state.currentUser ? (<a href='/create-post' className='btn btn-outline-secondary'>New post</a>) : null}
             </div>
           </nav>
         </div>
@@ -91,7 +95,7 @@ class App extends React.Component {
             <Route path='/' component={HomeScreen} exact={true} />
             <Route path='/login' component={login} />
             <Route path='/register' component={register} />
-            <Route path= '/create-post' component={CreatePostScreen}/>
+            <Route path='/create-post' component={CreatePostScreen} />
 
             {/* <Route path='/games/:gameId/' component={GameDetailScreen} />
         <Route component={NotFoundScreen} /> */}
