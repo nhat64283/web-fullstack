@@ -67,6 +67,7 @@ postRouter.post('/create-post', async (req,res) => {
                 });
                 res.status(200).json({
                     success: true,
+                    message:"upload successed",
                     data: newPost
                 });
             } catch (err) {

@@ -21,6 +21,7 @@ uploadsRouter.post('/photos', multerStorage.single('image'),async (req,res) => {
         const fileExt = req.file.originalname.split('.');
         const ext = fileExt[fileExt.length - 1];
         fs.renameSync(req.file.path, `public/${req.file.filename}.${ext}`);
+        console.log(`public/${req.file.filename}.${ext}`);
     //return url
     res.status(200).json({
         success: true,

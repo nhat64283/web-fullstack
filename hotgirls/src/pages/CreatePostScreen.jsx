@@ -7,15 +7,27 @@ class CreatePostScreen extends Component {
         imageUrl:'',
         file:undefined,
         errormessage:'',
+        successmessage:''
         
     };
+    handleReturnHomePage = () => {
+        window.location.href = `/`;
+        this.setState({
+            successmessage: '',
+         });
+    }
     handleContentChange = (event) => {
+        this.setState({
+            successmessage: '',
+         });
         this.setState({
             content: event.target.value,
         })
     };
     handleFileChange = (event) => {
-        
+        this.setState({
+            successmessage: '',
+         });
         const file=event.target.files[0];
         if(!imageFileRegex.test(file.name))
         {
@@ -79,7 +91,7 @@ class CreatePostScreen extends Component {
                 // .then((data) => {
                 //     console.log(data);
                 // })
-                await fetch('http://localhost:3001/post/create-post',{
+               const result = await fetch('http://localhost:3001/post/create-post',{
                     method:'POST',
                     headers:{
                         "Content-Type":"application/json"
@@ -91,6 +103,11 @@ class CreatePostScreen extends Component {
                     }),
                 }).then((res) => {
                     return res.json();
+                 })
+                 .then((data) => {
+                     this.setState({
+                        successmessage: data.message,
+                     });
                  })
                 //  window.location.href = `/`;
             } catch(error) {
@@ -155,8 +172,19 @@ class CreatePostScreen extends Component {
                             {this.state.errormessage}
                         </div>
                     ) : null}
+                    {this.state.successmessage ? (
+                        <div className="alert alert-danger" role="alert">
+                            {this.state.successmessage}
+                        </div>
+                    ) : null}
                     <div className='form-group'>
                         <input type='submit' className='btn btn-primary' value='Create Post' />
+                        
+                    </div>
+                    <div>
+                    <button type="button" class="btn btn-success"
+                    onClick={this.handleReturnHomePage}
+                    >Return to home page</button>
                     </div>
                 </form>
             </div>
